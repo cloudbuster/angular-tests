@@ -8,21 +8,21 @@ myApp.config(['$routeProvider', function($routeProvider){
       controller: 'viewOneController'
     })
 
-    .when('/viewTwo', {
-      templateUrl: 'views/viewTwo.html',
-      controller: 'viewTwoController'
-    })
+  .when('/viewTwo', {
+    templateUrl: 'views/viewTwo.html',
+    controller: 'viewTwoController'
+  })
 
-    .when('/viewThree', {
-      templateUrl: 'views/viewThree.html',
-      controller: 'viewThreeController'
-    })
+  .when('/viewThree', {
+    templateUrl: 'views/viewThree.html',
+    controller: 'viewThreeController'
+  })
 
-    .otherwise({
-      redirectTo: '/',
-      templateUrl: 'views/mainView.html',
-      controller: 'mainViewController'
-    });
+  .otherwise({
+    redirectTo: '/',
+    templateUrl: 'views/mainView.html',
+    controller: 'mainViewController'
+  });
 
 }]);
 
@@ -38,8 +38,25 @@ myApp.controller('viewTwoController', ['$scope', function($scope){
   $scope.title = 'View Two Controller title';
 }]);
 
-myApp.controller('viewThreeController', ['$scope', function($scope){
+myApp.controller('viewThreeController', ['$scope', '$http', '$log', function($scope, $http, $log){
   $scope.title = 'View Three Controller title';
+
+  $scope.title = "Chuck Norris Facts";
+
+  var onJokeComplete = function(response){
+    $scope.joke = response.data;
+    $scope.randJokeIndex = Math.floor(Math.random()*response.data.value.length);
+    $log.info('Loaded');
+  }
+
+  var onError = function(reason){
+    $scope.error = reason.data;
+    $log.info('Error');
+  }
+
+  $http.get('https://api.icndb.com/jokes?escape=javascript')
+    .then(onJokeComplete, onError);
+
 }]);
 
 myApp.controller('mainViewController', ['$scope', function($scope){
