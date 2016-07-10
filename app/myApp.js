@@ -10,16 +10,17 @@ myApp.config(['$routeProvider', function($routeProvider){
 
     .when('/viewTwo', {
       templateUrl: 'views/viewTwo.html',
-      controller: 'viewOneController'
+      controller: 'viewTwoController'
     })
 
     .when('/viewThree', {
       templateUrl: 'views/viewThree.html',
-      controller: 'viewOneController'
+      controller: 'viewThreeController'
     })
 
     .otherwise({
       redirectTo: '/',
+      templateUrl: 'views/mainView.html',
       controller: 'mainViewController'
     });
 
